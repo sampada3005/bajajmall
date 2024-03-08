@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    container_name: bajajmall-container-v1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Sampada@3005
+      POSTGRES_DB: bajajmall-db
+    ports:
+      - "5433:5432"
+    volumes:
+      - /Users/sampadadeshmukh/Documents/FSD/jpa-leaning/bajajmall_data_directory:/var/lib/postgresql/data
+  app:
+    build: .
+    image: bajajmall_app
+    container_name: bajajmall_container_v1
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/bajajmall-db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Sampada@3005
+    depends_on:
+      - db
